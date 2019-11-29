@@ -1,0 +1,28 @@
+{
+  "name": "midi-device",
+  "version": "0.1.0",
+  "description": "MidiDevice class and utility module.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "jsdoc2md index.js > api.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmxify/midi-device.git"
+  },
+  "keywords": [
+    "midi",
+    "hid",
+    "controller"
+  ],
+  "author": "Jason Banfield",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dmxify/midi-device/issues"
+  },
+  "homepage": "https://github.com/dmxify/midi-device#readme",
+  "devDependencies": {
+    "jsdoc-to-markdown": "^5.0.3"
+  }
+}

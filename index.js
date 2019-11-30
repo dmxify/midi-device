@@ -18,12 +18,20 @@ const MidiDevice = class {
     id = null,
     name = 'New Midi Device',
     manufacturer = 'Generic',
-    imagePath = ''
+    imagePath = '',
+    midiDeviceControls = {}
+  } = {
+    id: null,
+    name: 'New Midi Device',
+    manufacturer: 'Generic',
+    imagePath: null,
+    midiDeviceControls: {}
   }) {
     this._id = id;
     this._name = name;
     this._manufacturer = manufacturer;
     this._imagePath = imagePath;
+    this._midiDeviceControls = {}
   }
 
   get id() {
@@ -52,6 +60,13 @@ const MidiDevice = class {
   }
   set imagePath(val) {
     this._imagePath = val;
+  }
+
+  get midiDeviceControls() {
+    return this._midiDeviceControls;
+  }
+  set midiDeviceControls(val) {
+    this._midiDeviceControls = val;
   }
 }
 

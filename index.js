@@ -29,7 +29,8 @@ const MidiDevice = class {
     this._name = name;
     this._manufacturer = manufacturer;
     this._imagePath = imagePath;
-    this._midiDeviceControls = new Set();
+    this._midiDeviceControls = [];
+
   }
 
   get id() {
@@ -66,6 +67,49 @@ const MidiDevice = class {
   set midiDeviceControls(val) {
     this._midiDeviceControls = val;
   }
-}
+
+  /**
+   * Add a MidiDeviceControl to this MidiDevice
+   * @param {MidiDeviceControl} - MidiDeviceControl to add.
+   * @returns {array} - Array of MidiDeviceControls in this MidiDevice instance
+   */
+  addMidiDeviceControl(midiDeviceControl) {
+    this._midiDeviceControls.push(midiDeviceControl);
+  }
+
+  /**
+   * Determine if this MidiDevice has a MidiDeviceControl with a specific MidiMessage binding
+   * @param {object} MidiMessage - MidiMessage.values array to search for. e.g. "[10,45,127]"
+   * @returns {boolean} - true if control exists, false if it doesn't exist
+   */
+  hasControlWithBindingOf(midiMessageData) {
+    let set = new Set();
+    let controlType;
+    // for each MidiDeviceControl in this MidiDevice
+    for (control of this._midiDeviceControls) {
+      // iterate through midiMessageBindings. (format: [channel,note,value])
+      for (binding of control.midiMessageBindings) {
+        switch (control.controlType) {
+          case 'BUTTON':
+            // compare channel, note & value
+            if (midiMessageData[0] == binding[0] && midiMessageData[1] == binding[1] && midiMessageData[2] == binding[2]) {
+              return true;
+            }
+            break;
+          case 'ROTARY_OR_FADER':
+            // compare channel and note
+            if (midiMessageData[0] == binding[0] && midiMessageData[1] == binding[1]) {
+              return true;
+            }
+            break;
+          default:
+            break;
+        } // end switch
+      } // end for
+    } // end for
+    return false;
+  } // end hasControlWithBinding method
+
+} // end class
 
 module.exports = MidiDevice;

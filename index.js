@@ -1,7 +1,6 @@
 /**
  * MidiDevice class and utility module.
  * @module midi-device
- * @version 0.1.0
  * @author Jason Banfield <developer@dmxify.com>
  * @license MIT
  */

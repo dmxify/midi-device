@@ -3,7 +3,6 @@
 ## midi-device
 MidiDevice class and utility module.
 
-**Version**: 0.1.0  
 **Author**: Jason Banfield <developer@dmxify.com>  
 **License**: MIT  
 

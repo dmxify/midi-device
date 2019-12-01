@@ -11,26 +11,29 @@
  * @property {number} id - MidiDevice id
  * @property {string} name - MidiDevice name
  * @property {string} manufacturer - MidiDevice manufacturer
- * @property {string} imagePath
+ * @property {string} imagePath - Image path to
+ * @property {array} midiDeviceControls - Array of MidiDeviceControl objects configured for this MidiDevice
  */
+
 const MidiDevice = class {
   constructor({
     id = null,
     name = 'New Midi Device',
     manufacturer = 'Generic',
-    imagePath = ''
+    imagePath = '',
+    midiDeviceControls = []
   } = {
     id: null,
     name: 'New Midi Device',
     manufacturer: 'Generic',
-    imagePath: null
+    imagePath: '',
+    midiDeviceControls: []
   }) {
     this._id = id;
     this._name = name;
     this._manufacturer = manufacturer;
     this._imagePath = imagePath;
-    this._midiDeviceControls = [];
-
+    this._midiDeviceControls = midiDeviceControls;
   }
 
   get id() {

@@ -19,20 +19,26 @@ const MidiDevice = class {
     id = null,
     name = 'New Midi Device',
     manufacturer = 'Generic',
-    imagePath = '',
-    midiDeviceControls = []
+    midiDeviceControls = [],
+    ui = {
+      "imagePath": "",
+      "enabled": true
+    }
   } = {
     id: null,
     name: 'New Midi Device',
     manufacturer: 'Generic',
-    imagePath: '',
-    midiDeviceControls: []
+    midiDeviceControls: [],
+    ui: {
+      "imagePath": "",
+      "enabled": true
+    }
   }) {
     this._id = id;
     this._name = name;
     this._manufacturer = manufacturer;
-    this._imagePath = imagePath;
     this._midiDeviceControls = midiDeviceControls;
+    this._ui = ui;
     this.hasControlWithBindingOf = this.hasControlWithBindingOf.bind(this)
   }
 
@@ -71,6 +77,14 @@ const MidiDevice = class {
     this._midiDeviceControls = val;
   }
 
+  get ui() {
+    return this._ui;
+  }
+
+  set ui(val) {
+    this._ui = val;
+  }
+
   /**
    * Add a MidiDeviceControl to this MidiDevice
    * @param {MidiDeviceControl} - MidiDeviceControl to add.
@@ -83,8 +97,8 @@ const MidiDevice = class {
     return Math.max(...this._midiDeviceControls.map(o => o.id), 0) + 1;
   }
 
-  numOfControlType(controlType) {
-    return this._midiDeviceControls.filter((o) => o.controlType === controlType).length;
+  numOfControlType(type) {
+    return this._midiDeviceControls.filter((o) => o.type === type).length;
   }
 
   /**
@@ -93,19 +107,19 @@ const MidiDevice = class {
    * @returns {boolean} - true if control exists, false if it doesn't exist
    */
   hasControlWithBindingOf(midiMessageData) {
-    let controlType;
+    let type;
     // for each MidiDeviceControl in this MidiDevice
     for (let control of this._midiDeviceControls) {
       // iterate through midiMessageBindings. (format: [channel,note,value])
       for (let binding of control.midiMessageBindings) {
-        switch (control.controlType) {
+        switch (control.type) {
           case 'BUTTON':
             // compare channel, note & value
             if (midiMessageData[0] == binding[0] && midiMessageData[1] == binding[1] && midiMessageData[2] == binding[2]) {
               return true;
             }
             break;
-          case 'ROTARY_OR_FADER':
+          case 'FADER':
             // compare channel and note
             if (midiMessageData[0] == binding[0] && midiMessageData[1] == binding[1]) {
               return true;
@@ -127,15 +141,15 @@ const MidiDevice = class {
     }
     for (let control of midiDevice.midiDeviceControls) {
       // iterate through midiMessageBindings. (format: [channel,note,value])
-      for (let binding of control.midiMessageBindings) {
-        switch (control.controlType) {
+      for (let binding of control._midiMessageBindings) {
+        switch (control.type) {
           case 'BUTTON':
             // compare channel, note & value
             if (midiMessageData[0] == binding[0] && midiMessageData[1] == binding[1] && midiMessageData[2] == binding[2]) {
               return true;
             }
             break;
-          case 'ROTARY_OR_FADER':
+          case 'FADER':
             // compare channel and note
             if (midiMessageData[0] == binding[0] && midiMessageData[1] == binding[1]) {
               return true;
